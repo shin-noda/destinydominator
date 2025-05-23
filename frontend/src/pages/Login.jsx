@@ -39,25 +39,35 @@ function Login() {
             {message && <span>{message}</span>}
             <form onSubmit={handleSubmit}>
                 <input
+                    className='input-field'
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     type="email" 
                     placeholder="Email" 
                     required 
                 />
+                <br></br>
                 <input
+                    className='input-field'
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     type="password" 
                     placeholder="Password" 
                     required 
                 />
-                <button type="submit">Log In</button>
+                <br></br>
+                <button
+                    className="process-button"
+                    type="submit"
+                >
+                    Log In
+                </button>
             </form>
+            <br></br>
             <span>Don't have an account?</span>
             <Link to="/register">Register.</Link>
         </div>
         );
-}
+};
 
 export default Login;
