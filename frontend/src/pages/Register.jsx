@@ -32,7 +32,9 @@ function Register() {
     };
 
     return (
-        <div>
+        <div
+            className="register-container"
+        >
             <h2>Register</h2>
             <br></br>
             {message && <span>{message}</span>}

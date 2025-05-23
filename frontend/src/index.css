@@ -29,6 +29,14 @@ h1 {
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
     overflow: scroll;
 }
+.login-container {
+    margin: 0;
+    text-align: center;
+}
+.register-container {
+    margin: 0;
+    text-align: center;
+}
 .create-goal-container {
     float: left;
     background-color: #F3E5AB;
@@ -40,10 +48,6 @@ h1 {
     border-radius: 10px;
     box-sizing: border-box;
 }
-.create-goal-container:hover {
-    cursor: pointer;
-    opacity: 0.3;
-}
 .goal-container {
     float: left;
     margin: 10px 10px 10px 10px;
@@ -53,7 +57,4 @@ h1 {
     border: 2px solid #000000;
     border-radius: 10px;
     box-sizing: border-box;
-}
-.goal-container:hover {
-    cursor: pointer;
 }
