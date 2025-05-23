@@ -1,0 +1,59 @@
+body {
+    height: 100%;
+    margin: 0;
+}
+h1 {
+    text-align: center;
+}
+.input-field {
+    margin: 5px 0px 5px 0px;
+}
+.process-button {
+    margin-top: 10px;
+}
+.signout-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
+.container {
+    position: absolute;
+    top: 70px;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    text-align: center;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+    overflow: scroll;
+}
+.create-goal-container {
+    float: left;
+    background-color: #F3E5AB;
+    margin: 10px 10px 10px 10px;
+    padding-top: 10px;
+    width: 200px;
+    height: 300px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.create-goal-container:hover {
+    cursor: pointer;
+    opacity: 0.3;
+}
+.goal-container {
+    float: left;
+    margin: 10px 10px 10px 10px;
+    padding-top: 10px;
+    width: 200px;
+    height: 300px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.goal-container:hover {
+    cursor: pointer;
+}
