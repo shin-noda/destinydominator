@@ -60,5 +60,10 @@ h1 {
     height: 300px;
     border: 2px solid #000000;
     border-radius: 10px;
+    text-align: center;
     box-sizing: border-box;
+}
+.delete-goal-button {
+    float: right;
+    margin-right: 10px;
 }
