@@ -63,7 +63,39 @@ h1 {
     text-align: center;
     box-sizing: border-box;
 }
-.delete-goal-button {
-    float: right;
-    margin-right: 10px;
+.goal-page-container {
+    position: absolute;
+    top: 70px;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    text-align: center;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+    overflow: scroll;
+}
+.create-task-container {
+    float: top;
+    background-color: #A52A2A;
+    color: white;
+    margin: 10px 10px 10px 10px;
+    padding-top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 100px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.task-container {
+    float: top;
+    margin: 10px 10px 10px 10px;
+    padding-top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 100px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
