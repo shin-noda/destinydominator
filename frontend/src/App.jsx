@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Wrapper from "./pages/Wrapper";
+import Goalpage from "./pages/Goalpage";
 
 function App() {
   return (
@@ -26,6 +27,15 @@ function App() {
           element={
             <Wrapper>
               <Dashboard />
+            </Wrapper>
+          } 
+        />
+        {/* goalpage */}
+        <Route 
+          path="/goalpage/:id" 
+          element={
+            <Wrapper>
+              <Goalpage />
             </Wrapper>
           } 
         />

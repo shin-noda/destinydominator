@@ -2,21 +2,21 @@ import React from 'react'
 import supabase from '../helper/supabaseClient';
 import { useNavigate } from "react-router-dom";
 
-const Goal = ({ id, goalText }) => {
+const Task = ({ id, taskText }) => {
     const navigate = useNavigate();
 
-    const handleGoalClick = () => {
-        navigate(`/goalpage/${id}`);
+    const handleTaskClick = () => {
+        navigate(`/taskpage/${id}`);
     };
 
     return (
         <div
-            className="goal-container"
-            onClick={handleGoalClick}
+            className="task-container"
+            onClick={handleTaskClick}
         >
-            {goalText}
+            {taskText}
         </div>
     );
 };
 
-export default Goal;
+export default Task;

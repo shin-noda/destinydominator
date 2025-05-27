@@ -70,11 +70,6 @@ function Dashboard() {
         setGoalText("");
     };
 
-    const removeGoalById = (id) => {
-        // Calls all goal except the one which the user deletes
-        setGoals(prevGoals => prevGoals.filter(goal => goal.id !== id));
-    }
-
     return (
         <div>
             <h1>Welcome :)</h1>
@@ -116,7 +111,6 @@ function Dashboard() {
                         key={index} 
                         id={goal.id} 
                         goalText={goal.goalText}
-                        onDelete={removeGoalById}
                     />
                 ))}
             </div>
