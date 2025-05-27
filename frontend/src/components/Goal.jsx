@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Goal = () => {
+const Goal = ({ goalText }) => {
     function handleEditGoal() {
         console.log("Goal Clicked");
     };
@@ -10,7 +10,7 @@ const Goal = () => {
             className="goal-container"
             onClick={handleEditGoal}
         >
-            goal
+            {goalText}
         </div>
     );
 };

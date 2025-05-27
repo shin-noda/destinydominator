@@ -26,7 +26,7 @@ function Dashboard() {
 
         // If the user didn't type anything, it just closes the box.
         if (goalText) {
-            setGoals([...goals, <Goal />]);
+            setGoals([...goals, <Goal goalText={goalText} />]);
         }
 
         setGoalText("");
