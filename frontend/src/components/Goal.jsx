@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Goal = ({ goalText }) => {
+const Goal = ({ id, goalText }) => {
     function handleEditGoal() {
-        console.log("Goal Clicked");
+        console.log("id: " + id);
     };
 
     return (

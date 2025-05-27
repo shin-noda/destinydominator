@@ -29,6 +29,10 @@ h1 {
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
     overflow: scroll;
 }
+.home-container {
+    margin: 0;
+    text-align: center;
+}
 .login-container {
     margin: 0;
     text-align: center;
