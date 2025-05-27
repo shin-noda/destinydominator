@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import supabase from "../helper/supabaseClient";
 import Goal from "../components/Goal.jsx";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,21 @@ function Dashboard() {
     const [goalText, setGoalText] = useState("");
     const [showInput, setShowInput] = useState(false);
 
+    // Load goals once on start
+    useEffect(() => {
+        loadGoals();
+    }, []);
+
+    const loadGoals = async () => {
+        // Retrieve all data from the database
+        const { data, error } = await supabase
+            .from('Goal')
+            .select('*');
+        
+        // set data
+        setGoals(data.map(item => ({ id: item.id, goalText: item.name })));
+    };
+
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
@@ -20,13 +35,25 @@ function Dashboard() {
         setShowInput(true);
     };
 
-    const handleCreateGoal = (e) => {
+    const handleCreateGoal = async (e) => {
         e.stopPropagation();
         setShowInput(false);
 
         // If the user didn't type anything, it just closes the box.
-        if (goalText) {
-            setGoals([...goals, <Goal goalText={goalText} />]);
+        if (goalText && goalText.trim().length != 0) {
+            // Insert data to Supabase
+            const { data, error } = await supabase
+                .from('Goal')
+                .insert({ name: goalText, is_achieved: false })
+                .select();
+
+            const trimmedGoal = data.map(goal => ({
+                id: goal.id,
+                goalText: goal.name
+            }));
+
+            // Display updated a list of goals
+            setGoals([...goals, ...trimmedGoal]);
         }
 
         setGoalText("");
@@ -40,6 +67,7 @@ function Dashboard() {
         // This stops calling the parent element.
         e.stopPropagation();
         setShowInput(false);
+        setGoalText("");
     };
 
     return (
@@ -79,9 +107,7 @@ function Dashboard() {
                     )}
                 </div>
                 {goals.map((goal, index) => (
-                    <React.Fragment key={index}>
-                        {goal}
-                    </React.Fragment>
+                    <Goal key={index} id={goal.id} goalText={goal.goalText} />
                 ))}
             </div>
             <button
