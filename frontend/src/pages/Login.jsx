@@ -27,6 +27,9 @@ function Login() {
         }
 
         if (data) {
+            // Put an email into session
+            sessionStorage.setItem('email', email);
+
             navigate("/dashboard");
             return null;
         }

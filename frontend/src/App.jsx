@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Wrapper from "./pages/Wrapper";
 import Goalpage from "./pages/Goalpage";
+import Taskpage from "./pages/Taskpage";
 
 function App() {
   return (
@@ -37,7 +38,16 @@ function App() {
             <Wrapper>
               <Goalpage />
             </Wrapper>
-          } 
+          }
+        />
+        {/* taskpage */}
+        <Route 
+          path="/taskpage/:id" 
+          element={
+            <Wrapper>
+              <Taskpage />
+            </Wrapper>
+          }
         />
       </Routes>
     </BrowserRouter>
