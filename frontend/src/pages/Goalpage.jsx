@@ -117,13 +117,13 @@ function Goalpage() {
                             />
                             <br></br>
                             <button
-                                className="add-goal-button"
+                                className="add-task-button"
                                 onClick={handleCreateTask}
                             >
                                 Add
                             </button>
                             <button
-                                className="cancel-goal-button"
+                                className="cancel-task-button"
                                 onClick={handleCancelTask}
                             >
                                 X

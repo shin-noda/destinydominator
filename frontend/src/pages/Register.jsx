@@ -12,6 +12,30 @@ function Register() {
         event.preventDefault();
         setMessage("");
 
+        let isUsed = await checkIfEmailIsTaken();
+
+        if (!isUsed) {
+            await createNewUser();
+        };
+    };
+
+    const checkIfEmailIsTaken = async () => {
+        // Check if the email is already in use
+        const { data, error } = await supabase
+            .from('User')
+            .select('*')
+            .eq('email', email);
+
+        // Email is already in use.
+        if (data.length != 0) {
+            setMessage("This email is already taken. Please use a different one.");
+            return true;
+        }
+
+        return false;
+    };
+
+    const createNewUser = async () => {
         const {data, error} = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -26,9 +50,19 @@ function Register() {
             setMessage("User account created!");
         }
 
+        // Inseat a new user into a table
+        await insertNewUser();
+
         // Clear the fields
         setEmail("");
         setPassword("");
+    };
+
+    const insertNewUser = async () => {
+        const { data, error } = await supabase
+            .from('User')
+            .insert({ email: email })
+            .select();
     };
 
     return (
