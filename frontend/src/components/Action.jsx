@@ -3,10 +3,11 @@ import supabase from '../helper/supabaseClient';
 
 const Action = ({ id, actionText }) => {
     const [text, setText] = useState("");
+    const [displayText, setDisplayText] = useState(actionText);
     const [showInput, setShowInput] = useState(false);
 
     const handleActionClick = () => {
-        setText(actionText);
+        setText(displayText);
         setShowInput(true);
     };
 
@@ -21,6 +22,13 @@ const Action = ({ id, actionText }) => {
                 .from('Action')
                 .update({ name: text })
                 .eq('id', id);
+            
+            // Update the page when it's saved
+            if (!error) {
+                setDisplayText(text);
+            } else {
+                console.error("Error updating action: ", error);
+            }
         };
 
         setText("");
@@ -67,7 +75,7 @@ const Action = ({ id, actionText }) => {
                     </button>
                 </>
             ) : (
-                <>{actionText}</>
+                <>{displayText}</>
             )}
         </div>
     );

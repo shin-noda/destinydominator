@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../helper/supabaseClient";
 import Goal from "../components/Goal.jsx";
-import { useNavigate } from "react-router-dom";
+import Navigationbar from "../components/Navigationbar.jsx";
 
 function Dashboard() {
-    const navigate = useNavigate();
-
     const [id, setId] = useState(0);
     const [goals, setGoals] = useState([]);
     const [goalText, setGoalText] = useState("");
@@ -42,12 +40,6 @@ function Dashboard() {
 
         // Looks like this is unnecessary but this is required since setId is not "fast" enough to update the id when it retrieves data in loadGoals
         return parseInt(data[0].id);
-    };
-
-    const signOut = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
-        navigate("/login");
     };
 
     const handleAddGoal = () => {
@@ -91,7 +83,12 @@ function Dashboard() {
 
     return (
         <div>
-            <h1>Welcome :)</h1>
+            <Navigationbar />
+            <h1
+                className="welcome-message"
+            >
+                Welcome :)
+            </h1>
             <div className="container">
                 <div
                     className="create-goal-container"
@@ -133,12 +130,6 @@ function Dashboard() {
                     />
                 ))}
             </div>
-            <button
-                className="signout-button"
-                onClick={signOut}
-            >
-                Sign Out
-            </button>
         </div>
     );
 };
