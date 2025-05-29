@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import supabase from '../helper/supabaseClient';
+import { useState } from 'react'
 import Settingwindow from './Settingwindow.jsx';
 
 const Setting = () => {

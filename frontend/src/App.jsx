@@ -1,13 +1,13 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Wrapper from "./pages/Wrapper";
 import Goalpage from "./pages/Goalpage";
 import Taskpage from "./pages/Taskpage";
+import Visualizationpage from "./pages/Visualizationpage";
+import About from "./pages/About";
+import Visualpage from "./pages/Visualpage";
 
 function App() {
   return (
@@ -18,9 +18,6 @@ function App() {
 
         {/* register */}
         <Route path="/register" element={<Register />} />
-
-        {/* login */}
-        <Route path="/login" element={<Login />} />
 
         {/* dashboard */}
         <Route 
@@ -46,6 +43,33 @@ function App() {
           element={
             <Wrapper>
               <Taskpage />
+            </Wrapper>
+          }
+        />
+        {/* visualizationpage */}
+        <Route 
+          path="/visualizationpage" 
+          element={
+            <Wrapper>
+              <Visualizationpage />
+            </Wrapper>
+          }
+        />
+        {/* about */}
+        <Route 
+          path="/about" 
+          element={
+            <Wrapper>
+              <About />
+            </Wrapper>
+          }
+        />
+        {/* visualpage */}
+        <Route 
+          path="/visualpage/:id" 
+          element={
+            <Wrapper>
+              <Visualpage />
             </Wrapper>
           }
         />
