@@ -144,7 +144,7 @@ const Visualpage = () => {
             .from('Action')
             .select('*')
             .in('task_id', taskIds)
-            .order('id');
+            .order('task_id');
         
         // set data
         setActions(data.map(item => ({ id: item.id, actionText: item.name, taskId: item.task_id })));
