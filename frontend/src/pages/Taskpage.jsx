@@ -97,6 +97,13 @@ function Taskpage() {
         setActionText("");
     };
 
+    // Need this to update the page after deletion of the action
+    // Without this the update result won't show up on the screen
+    // even though it is updated on the database
+    const handleDeleteAction = (idToDelete) => {
+        setActions(prev => prev.filter(action => action.id !== idToDelete));
+    };
+
     return (
         <div>
             <Navigationbar />
@@ -139,11 +146,12 @@ function Taskpage() {
                         <div className="add-card">+ Add an action</div>
                     )}
                 </div>
-                {actions.map((action, index) => (
+                {actions.map((action) => (
                     <Action
-                        key={index} 
+                        key={action.id} 
                         id={action.id} 
                         actionText={action.actionText}
+                        onDelete={handleDeleteAction}
                     />
                 ))}
             </div>

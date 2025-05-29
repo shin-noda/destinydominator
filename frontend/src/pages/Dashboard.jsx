@@ -82,6 +82,11 @@ function Dashboard() {
         setGoalText("");
     };
 
+    // Need this for updating the screen
+    const handleDeleteGoal = (idToDelete) => {
+        setGoals(prev => prev.filter(goal => goal.id !== idToDelete));
+    };
+
     return (
         <div>
             <Navigationbar />
@@ -123,11 +128,12 @@ function Dashboard() {
                         <div className="add-card">+ Add a goal</div>
                     )}
                 </div>
-                {goals.map((goal, index) => (
+                {goals.map((goal) => (
                     <Goal
-                        key={index} 
+                        key={goal.id} 
                         id={goal.id} 
                         goalText={goal.goalText}
+                        onDelete={handleDeleteGoal}
                     />
                 ))}
             </div>

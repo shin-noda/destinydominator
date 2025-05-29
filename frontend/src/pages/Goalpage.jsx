@@ -97,6 +97,11 @@ function Goalpage() {
         setTaskText("");
     };
 
+    // Need this for updating the screen
+    const handleDeleteTask = (idToDelete) => {
+        setTasks(prev => prev.filter(task => task.id !== idToDelete));
+    };
+
     return (
         <div>
             <Navigationbar />
@@ -140,11 +145,12 @@ function Goalpage() {
                         <div className="add-card">+ Add a task</div>
                     )}
                 </div>
-                {tasks.map((task, index) => (
+                {tasks.map((task) => (
                     <Task
-                        key={index} 
+                        key={task.id} 
                         id={task.id} 
                         taskText={task.taskText}
+                        onDelete={handleDeleteTask}
                     />
                 ))}
             </div>

@@ -1,20 +1,141 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Edit from "./Edit.jsx";
+import supabase from "../helper/supabaseClient.js";
 
-const Goal = ({ id, goalText }) => {
+const Goal = ({ id, goalText, onDelete }) => {
     const navigate = useNavigate();
+    const [isHovered, setIsHovered] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [text, setText] = useState(goalText);
 
     const handleGoalClick = () => {
-        navigate(`/goalpage/${id}`);
+        if (!isEditing) {
+            navigate(`/goalpage/${id}`);
+        }
     };
+
+    const handleEditClick = (e) => {
+        e.stopPropagation();
+        setIsEditing(true);
+    };
+
+    const handleInputChange = (e) => {
+        setText(e.target.value);
+    }
+
+    const handleSaveGoal = async (e) => {
+        setIsEditing(false);
+
+        if (text && text.trim().length != 0) {
+            // Insert data to Supabase
+            const { data, error } = await supabase
+                .from('Goal')
+                .update({ name: text })
+                .eq('id', id);
+            
+            // Show an error message
+            if (error) {
+                console.error("Error updating goal: ", error);
+            }
+        } else {
+            // Cancel update
+            setText(goalText);
+        }
+    };
+
+    const handleDeleteGoal = async (e) => {
+        e.stopPropagation();
+        setIsEditing(false);
+
+        deleteCorrespoindingTasksAndActions(id);
+
+        // Delete the goal and corresponding tasks and actions
+        // Note: need to delete this after deleting corresponding tasks and actions
+        const { data, error } = await supabase
+            .from('Goal')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error("Error deleting goal: ", error);
+        } else {
+            // Notify parent to remove from UI
+            onDelete(id);
+        }
+    }
+
+    const deleteCorrespoindingTasksAndActions = async (id) => {
+        const { data: taskData, error: taskError } = await supabase
+            .from('Task')
+            .select('*')
+            .eq('goal_id', id);
+
+        // Delete actions related to the task
+        for (let i = 0; i < taskData.length; i++) {
+            const taskId = taskData[i].id;
+
+            // Delete actions
+            const { data: actionData, error: actionError } = await supabase
+                .from('Action')
+                .delete()
+                .eq('task_id', taskId);
+            
+            // Delete the task
+            const { data: oneTask, error: oneTaskError } = await supabase
+                .from('Task')
+                .delete()
+                .eq('id', taskId);
+        }
+    }
+
+    const handleCancelGoal = (e) => {
+        e.stopPropagation();
+        setIsEditing(false);
+    }
 
     return (
         <div
             className="goal-container"
             onClick={handleGoalClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
-            <Edit />
-            {goalText}
+            {isHovered && !isEditing && (
+                <Edit onClick={handleEditClick} />
+            )}
+
+            {isEditing ? (
+                <>
+                    <input 
+                        className="block-input-field"
+                        type="text"
+                        value={text}
+                        onChange={handleInputChange}
+                    />
+                    <br></br>
+                    <button
+                        className="add-button"
+                        onClick={handleSaveGoal}
+                    >
+                        Save
+                    </button>
+                    <button
+                        className="delete-button"
+                        onClick={handleDeleteGoal}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="cancel-button"
+                        onClick={handleCancelGoal}
+                    >
+                        X
+                    </button>
+                </>
+            ) : (
+                <span>{text}</span>
+            )}
         </div>
     );
 };

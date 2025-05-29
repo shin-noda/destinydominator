@@ -1,25 +1,13 @@
-import { useState } from 'react'
 import pen from "../assets/pen.svg";
 
-const Edit = () => {
-    const [showWindow, setShowWindow] = useState(false);
-    const handleClick = () => {
-        setShowWindow(!showWindow);
-    };
-
+const Edit = ({ onClick }) => {
     return (
-        <div>
-            {showWindow ? (
-            <img
-                className="edit-pen-image"
-                src={pen}
-                alt=""
-                onClick={handleClick}
-            />
-            ) : (
-                <></>
-            )}
-        </div>
+        <img
+            className="edit-pen-image"
+            src={pen}
+            alt=""
+            onClick={onClick}
+        />
     );
 };
 
