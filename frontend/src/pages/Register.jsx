@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import supabase from "../helper/supabaseClient";
 import { Link } from "react-router-dom";
 
@@ -69,7 +69,7 @@ function Register() {
         <div
             className="register-container"
         >
-            <h2>Register</h2>
+            <h1>Register</h1>
             <br></br>
             {message && <span>{message}</span>}
             <form onSubmit={handleSubmit}>
@@ -100,7 +100,7 @@ function Register() {
             </form>
             <br></br>
             <span>Already have an account?</span>
-            <Link to="/login">Log in.</Link>
+            <Link to="/">Log in.</Link>
         </div>
     );
 };

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../helper/supabaseClient";
 import Task from "../components/Task.jsx";
+import Navigationbar from "../components/Navigationbar.jsx";
 
 function Goalpage() {
     const [goal, setGoal] = useState([]);
@@ -50,7 +51,8 @@ function Goalpage() {
         const { data, error } = await supabase
             .from('Task')
             .select('*')
-            .eq('goal_id', goalId);
+            .eq('goal_id', goalId)
+            .order('id');
         
         // set data
         setTasks(data.map(item => ({ id: item.id, taskText: item.name })));
@@ -97,7 +99,12 @@ function Goalpage() {
 
     return (
         <div>
-            <h1>{goal.goalText}</h1>
+            <Navigationbar />
+            <h1
+                className="top-message"
+            >
+                {goal.goalText}
+            </h1>
             <div
                 className="goal-page-container"
             >

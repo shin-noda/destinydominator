@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../helper/supabaseClient";
 import Action from "../components/Action.jsx";
+import Navigationbar from "../components/Navigationbar.jsx";
 
 function Taskpage() {
     const [task, setTask] = useState([]);
@@ -50,7 +51,8 @@ function Taskpage() {
         const { data, error } = await supabase
             .from('Action')
             .select('*')
-            .eq('task_id', taskId);
+            .eq('task_id', taskId)
+            .order('id');
         
         // set data
         setActions(data.map(item => ({ id: item.id, actionText: item.name })));
@@ -97,7 +99,12 @@ function Taskpage() {
 
     return (
         <div>
-            <h1>{task.taskText}</h1>
+            <Navigationbar />
+            <h1
+                className="top-message"
+            >
+                {task.taskText}
+            </h1>
             <div
                 className="task-page-container"
             >
