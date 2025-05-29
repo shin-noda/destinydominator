@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import supabase from '../helper/supabaseClient';
+import Edit from "./Edit.jsx";
 
 const Action = ({ id, actionText }) => {
     const [text, setText] = useState("");
@@ -38,6 +39,10 @@ const Action = ({ id, actionText }) => {
         setText(e.target.value);
     };
 
+    const handleDeleteAction = () => {
+
+    };
+
     const handleCancelAction = (e) => {
         // This stops calling the parent element.
         e.stopPropagation();
@@ -50,7 +55,7 @@ const Action = ({ id, actionText }) => {
             className="action-container"
             onClick={handleActionClick}
         >
-
+            <Edit />
             {showInput ? (
                 <>
                     <textarea
@@ -62,13 +67,19 @@ const Action = ({ id, actionText }) => {
                     />
                     <br></br>
                     <button
-                        className="add-action-button"
+                        className="save-button"
                         onClick={handleUpdateAction}
                     >
                         Save
                     </button>
                     <button
-                        className="cancel-action-button"
+                        className="delete-button"
+                        onClick={handleDeleteAction}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="cancel-button"
                         onClick={handleCancelAction}
                     >
                         X

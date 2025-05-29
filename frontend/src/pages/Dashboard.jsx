@@ -98,7 +98,7 @@ function Dashboard() {
                     {showInput ? (
                         <>
                             <input
-                                className="input-field"
+                                className="block-input-field"
                                 type="text"
                                 value={goalText}
                                 onChange={handleInputChange}
@@ -107,20 +107,20 @@ function Dashboard() {
                             />
                             <br></br>
                             <button
-                                className="add-goal-button"
+                                className="add-button"
                                 onClick={handleCreateGoal}
                             >
                                 Add
                             </button>
                             <button
-                                className="cancel-goal-button"
+                                className="cancel-button"
                                 onClick={handleCancelGoal}
                             >
                                 X
                             </button>
                         </>
                     ) : (
-                        <>+ Add a goal</>
+                        <div className="add-card">+ Add a goal</div>
                     )}
                 </div>
                 {goals.map((goal, index) => (
