@@ -19,7 +19,8 @@ const Visualizationpage = () => {
         const { data, error } = await supabase
             .from('Goal')
             .select('*')
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .order('id');
         
         // set data
         setGoals(data.map(item => ({ id: item.id, goalText: item.name })));

@@ -2,19 +2,17 @@ import { useState } from 'react'
 import supabase from '../helper/supabaseClient';
 import Edit from "./Edit.jsx";
 
-const Action = ({ id, actionText }) => {
-    const [text, setText] = useState("");
-    const [displayText, setDisplayText] = useState(actionText);
-    const [showInput, setShowInput] = useState(false);
+const Action = ({ id, actionText, onDelete }) => {
+    const [text, setText] = useState(actionText);
+    const [isHovered, setIsHovered] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
 
-    const handleActionClick = () => {
-        setText(displayText);
-        setShowInput(true);
+    const handleEditClick = (e) => {
+        setIsEditing(true);
     };
 
     const handleUpdateAction = async (e) => {
-        e.stopPropagation();
-        setShowInput(false);
+        setIsEditing(false);
 
         // If the user didn't type anything, it just closes the box.
         if (text && text.trim().length != 0) {
@@ -25,38 +23,54 @@ const Action = ({ id, actionText }) => {
                 .eq('id', id);
             
             // Update the page when it's saved
-            if (!error) {
-                setDisplayText(text);
-            } else {
+            if (error) {
                 console.error("Error updating action: ", error);
             }
-        };
-
-        setText("");
+        } else {
+            // Cancel update
+            setText(actionText)
+        }
     };
 
     const handleInputChange = (e) => {
         setText(e.target.value);
     };
 
-    const handleDeleteAction = () => {
+    const handleDeleteAction = async (e) => {
+        e.stopPropagation();
+        setIsEditing(false);
 
+        // Delete the action
+        const { data, error } = await supabase
+            .from('Action')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error("Error deleting action: ", error);
+        } else {
+            // Notify parent to remove from UI
+            onDelete(id);
+        }
     };
 
     const handleCancelAction = (e) => {
         // This stops calling the parent element.
         e.stopPropagation();
-        setShowInput(false);
-        setText("");
+        setIsEditing(false);
     };
 
     return (
         <div
             className="action-container"
-            onClick={handleActionClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
-            <Edit />
-            {showInput ? (
+            {isHovered && !isEditing && (
+                <Edit onClick={handleEditClick} />
+            )}
+
+            {isEditing ? (
                 <>
                     <textarea
                         className="action-field"
@@ -85,8 +99,9 @@ const Action = ({ id, actionText }) => {
                         X
                     </button>
                 </>
+
             ) : (
-                <>{displayText}</>
+                <span>{text}</span>
             )}
         </div>
     );
