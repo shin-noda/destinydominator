@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Edit from "./Edit.jsx";
 
 const Goal = ({ id, goalText }) => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Goal = ({ id, goalText }) => {
             className="goal-container"
             onClick={handleGoalClick}
         >
+            <Edit />
             {goalText}
         </div>
     );

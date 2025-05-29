@@ -123,20 +123,20 @@ function Taskpage() {
                             />
                             <br></br>
                             <button
-                                className="add-action-button"
+                                className="add-button"
                                 onClick={handleCreateAction}
                             >
                                 Add
                             </button>
                             <button
-                                className="cancel-action-button"
+                                className="cancel-button"
                                 onClick={handleCancelAction}
                             >
                                 X
                             </button>
                         </>
                     ) : (
-                        <>+ Add an action</>
+                        <div className="add-card">+ Add an action</div>
                     )}
                 </div>
                 {actions.map((action, index) => (

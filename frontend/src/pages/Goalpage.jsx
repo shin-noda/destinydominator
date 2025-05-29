@@ -115,7 +115,7 @@ function Goalpage() {
                     {showInput ? (
                         <>
                             <input
-                                className="input-field"
+                                className="block-input-field"
                                 type="text"
                                 value={taskText}
                                 onChange={handleInputChange}
@@ -124,20 +124,20 @@ function Goalpage() {
                             />
                             <br></br>
                             <button
-                                className="add-task-button"
+                                className="add-button"
                                 onClick={handleCreateTask}
                             >
                                 Add
                             </button>
                             <button
-                                className="cancel-task-button"
+                                className="cancel-button"
                                 onClick={handleCancelTask}
                             >
                                 X
                             </button>
                         </>
                     ) : (
-                        <>+ Add a task</>
+                        <div className="add-card">+ Add a task</div>
                     )}
                 </div>
                 {tasks.map((task, index) => (

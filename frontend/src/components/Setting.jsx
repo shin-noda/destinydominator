@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Settingwindow from './Settingwindow.jsx';
+import menu from "../assets/menu.svg";
 
 const Setting = () => {
     const [showWindow, setShowWindow] = useState(false);
@@ -12,6 +13,10 @@ const Setting = () => {
             className="setting-container"
             onClick={handleClick}
         >
+            <img
+                className="menu-bar-image"
+                src={menu}
+                alt="" />
             {showWindow ? (
                 <>
                     <Settingwindow />
