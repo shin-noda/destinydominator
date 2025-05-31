@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Settingwindow from './Settingwindow.jsx';
 import menu from "../assets/menu.svg";
 

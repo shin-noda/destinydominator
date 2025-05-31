@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 
 const Goalnode = forwardRef(({ name, isAchieved }, ref) => {
     const getBackgroundColor = () => {

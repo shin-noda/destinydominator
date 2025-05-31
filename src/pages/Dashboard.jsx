@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import supabase from "../helper/supabaseClient.js";
 import Goal from "../components/Goal.jsx";
 import Navigationbar from "../components/Navigationbar.jsx";

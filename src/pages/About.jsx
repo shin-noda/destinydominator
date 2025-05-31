@@ -1,3 +1,4 @@
+import React from 'react';
 import Navigationbar from '../components/Navigationbar.jsx';
 
 const About = () => {

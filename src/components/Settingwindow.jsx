@@ -1,3 +1,4 @@
+import React from "react";
 import supabase from '../helper/supabaseClient';
 import { useNavigate } from "react-router-dom";
 

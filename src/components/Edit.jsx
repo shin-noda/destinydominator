@@ -1,3 +1,4 @@
+import React from "react";
 import pen from "../assets/pen.svg";
 
 const Edit = ({ onClick }) => {

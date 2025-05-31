@@ -1,3 +1,4 @@
+import React from "react";
 import Setting from './Setting.jsx';
 import { useNavigate } from "react-router-dom";
 
