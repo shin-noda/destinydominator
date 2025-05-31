@@ -73,7 +73,7 @@ function Register() {
                 </button>
             </form>
             <br></br>
-            <span>Already have an account?</span>
+            <span>Already have an account? </span>
             <Link to="/">Log in.</Link>
         </div>
     );

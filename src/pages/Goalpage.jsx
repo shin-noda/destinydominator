@@ -59,7 +59,7 @@ function Goalpage() {
             .order('id');
         
         // set data
-        setTasks(data.map(item => ({ id: item.id, taskText: item.name })));
+        setTasks(data.map(item => ({ id: item.id, taskText: item.name, isAchieved: item.is_achieved })));
     };
 
     const handleClickNavigation = () => {
@@ -90,7 +90,8 @@ function Goalpage() {
 
             const trimmedTask = data.map(task => ({
                 id: task.id,
-                taskText: task.name
+                taskText: task.name,
+                isAchieved: task.is_achieved
             }));
 
             // Display updated a list of tasks
@@ -165,6 +166,7 @@ function Goalpage() {
                         key={task.id} 
                         id={task.id} 
                         taskText={task.taskText}
+                        isAchieved={task.isAchieved}
                         onDelete={handleDeleteTask}
                     />
                 ))}

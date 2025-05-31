@@ -61,7 +61,7 @@ function Taskpage() {
             .order('id');
         
         // set data
-        setActions(data.map(item => ({ id: item.id, actionText: item.name })));
+        setActions(data.map(item => ({ id: item.id, actionText: item.name, isAchieved: item.is_achieved })));
     };
 
     const handleClickNavigation = () => {
@@ -92,7 +92,8 @@ function Taskpage() {
 
             const trimmedAction = data.map(action => ({
                 id: action.id,
-                actionText: action.name
+                actionText: action.name,
+                isAchieved: action.is_achieved
             }));
 
             // Display updated a list of actions
@@ -168,6 +169,7 @@ function Taskpage() {
                         key={action.id} 
                         id={action.id} 
                         actionText={action.actionText}
+                        isAchieved={action.isAchieved}
                         onDelete={handleDeleteAction}
                     />
                 ))}
