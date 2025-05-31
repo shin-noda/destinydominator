@@ -1,12 +1,20 @@
-# React + Vite
+## How to use Goal Tracker? 🎯
+Achieving a goal can feel overwhelming. But breaking it down into smaller steps makes it more manageable. This app is designed to help you achieve your goals by organizing them into clear, actionable steps.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Example:
+Let’s say you want to pass a literature course. To do that, you need to read Book A and Book B. Book A has 100 pages, and Book B has 150 pages. In this case, your breakdown might look like this:
 
-Currently, two official plugins are available:
+Goal: Pass the literature course 📚
+Task 1: Read Book A
+Action 1: Read pages 1–50
+Action 2: Read pages 51–100
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Task 2: Read Book B
+Action 1: Read pages 1–100
+Action 2: Read pages 101–150
 
-## Expanding the ESLint configuration
+This is just one example of how you can structure your goals. 💪
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+You can also visualize your progress on the Visualization page, accessible from the top menu bar.
+
+Good luck :)
