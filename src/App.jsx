@@ -12,7 +12,7 @@ import Visualpage from "./pages/Visualpage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/goaltracker">
       <Routes>
         {/* home */}
         <Route path="/" element={<Home />} />
