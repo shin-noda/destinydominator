@@ -9,38 +9,24 @@ function Dashboard() {
     const [goalText, setGoalText] = useState("");
     const [showInput, setShowInput] = useState(false);
 
+    // Gete data from session
+    const user_id = sessionStorage.getItem('user_id');
+
     // Load goals once on start
     useEffect(() => {
         loadGoals();
     }, []);
 
     const loadGoals = async () => {
-        const userId = await getUserId();
-
         // Retrieve all data from the database
         const { data, error } = await supabase
             .from('Goal')
             .select('*')
-            .eq('user_id', userId)
+            .eq('user_id', user_id)
             .order('id');
         
         // set data
         setGoals(data.map(item => ({ id: item.id, goalText: item.name })));
-    };
-
-    const getUserId = async () => {
-        const email = sessionStorage.getItem('email');
-
-        // Retrieve a user data based on the email
-        const { data, error } = await supabase
-            .from('User')
-            .select('*')
-            .eq('email', email);
-
-        setId(parseInt(data[0].id));
-
-        // Looks like this is unnecessary but this is required since setId is not "fast" enough to update the id when it retrieves data in loadGoals
-        return parseInt(data[0].id);
     };
 
     const handleAddGoal = () => {
@@ -56,7 +42,11 @@ function Dashboard() {
             // Insert data to Supabase
             const { data, error } = await supabase
                 .from('Goal')
-                .insert({ name: goalText, is_achieved: false, user_id: id })
+                .insert({ 
+                    name: goalText, 
+                    is_achieved: false, 
+                    user_id: user_id 
+                })
                 .select();
 
             const trimmedGoal = data.map(goal => ({
