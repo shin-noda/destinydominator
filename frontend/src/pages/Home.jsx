@@ -26,6 +26,23 @@ function Home() {
             return;
         }
 
+        const { data: user, error: userError } = await supabase.auth.getUser();
+
+        if (userError) {
+            return;
+        }
+
+        if (data && user) {
+            const user_id = user.user.id;
+            
+            // Put an email and user_id into session
+            sessionStorage.setItem('email', email);
+            sessionStorage.setItem('user_id', user_id);
+
+            navigate("/dashboard");
+            return null;
+        }
+
         if (data) {
             // Put an email into session
             sessionStorage.setItem('email', email);

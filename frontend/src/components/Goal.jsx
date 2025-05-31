@@ -9,11 +9,9 @@ const Goal = ({ id, goalText, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(goalText);
 
-    const handleGoalClick = () => {
-        if (!isEditing) {
-            navigate(`/goalpage/${id}`);
-        }
-    };
+    const handleAddTasks = () => {
+        navigate(`/goalpage/${id}`);
+    }
 
     const handleEditClick = (e) => {
         e.stopPropagation();
@@ -97,10 +95,19 @@ const Goal = ({ id, goalText, onDelete }) => {
     return (
         <div
             className="goal-container"
-            onClick={handleGoalClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {isHovered && !isEditing && (
+                <button
+                    className="add-tasks-button"
+                    onClick={handleAddTasks}
+                >
+                    Add tasks
+                </button>
+            )}
+
+
             {isHovered && !isEditing && (
                 <Edit onClick={handleEditClick} />
             )}

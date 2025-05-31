@@ -12,27 +12,11 @@ function Register() {
         event.preventDefault();
         setMessage("");
 
-        let isUsed = await checkIfEmailIsTaken();
-
-        if (!isUsed) {
-            await createNewUser();
-        };
-    };
-
-    const checkIfEmailIsTaken = async () => {
-        // Check if the email is already in use
-        const { data, error } = await supabase
-            .from('User')
-            .select('*')
-            .eq('email', email);
-
-        // Email is already in use.
-        if (data.length != 0) {
-            setMessage("This email is already taken. Please use a different one.");
-            return true;
-        }
-
-        return false;
+        // I need to 
+        //  turn ON the Confirm email and
+        //  turn OFF the Confirm Phone
+        // https://supabase.com/docs/reference/javascript/auth-signup
+        await createNewUser();
     };
 
     const createNewUser = async () => {
@@ -47,22 +31,12 @@ function Register() {
         }
 
         if (data) {
-            setMessage("User account created!");
+            setMessage("User account created! Please check your email.");
         }
-
-        // Inseat a new user into a table
-        await insertNewUser();
 
         // Clear the fields
         setEmail("");
         setPassword("");
-    };
-
-    const insertNewUser = async () => {
-        const { data, error } = await supabase
-            .from('User')
-            .insert({ email: email })
-            .select();
     };
 
     return (

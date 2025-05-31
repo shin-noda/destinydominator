@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../helper/supabaseClient";
 import Task from "../components/Task.jsx";
 import Navigationbar from "../components/Navigationbar.jsx";
 
 function Goalpage() {
+    const navigate = useNavigate();
     const [goal, setGoal] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [taskText, setTaskText] = useState("");
     const [showInput, setShowInput] = useState(false);
+
+    // Gete data from session
+    const user_id = sessionStorage.getItem('user_id');
 
     // id is a string
     const { id } = useParams();
@@ -58,6 +62,10 @@ function Goalpage() {
         setTasks(data.map(item => ({ id: item.id, taskText: item.name })));
     };
 
+    const handleClickNavigation = () => {
+        navigate(`/dashboard`);
+    }
+
     const handleAddTask = () => {
         setShowInput(true);
     };
@@ -71,7 +79,13 @@ function Goalpage() {
             // Insert data to Supabase
             const { data, error } = await supabase
                 .from('Task')
-                .insert({ name: taskText, is_achieved: false, goal_id: goalId })
+                .insert({
+                    name: taskText, 
+                    is_achieved: false, 
+                    goal_id: goalId,
+                    user_id: user_id
+
+                })
                 .select();
 
             const trimmedTask = data.map(task => ({
@@ -107,6 +121,7 @@ function Goalpage() {
             <Navigationbar />
             <h1
                 className="top-message"
+                onClick={handleClickNavigation}
             >
                 {goal.goalText}
             </h1>

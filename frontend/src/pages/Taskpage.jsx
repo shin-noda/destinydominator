@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../helper/supabaseClient";
 import Action from "../components/Action.jsx";
 import Navigationbar from "../components/Navigationbar.jsx";
 
 function Taskpage() {
+    const navigate = useNavigate();
+    const [goalId, setGoalId] = useState(0);
     const [task, setTask] = useState([]);
     const [actions, setActions] = useState([]);
     const [actionText, setActionText] = useState("");
     const [showInput, setShowInput] = useState(false);
+
+    // Gete data from session
+    const user_id = sessionStorage.getItem('user_id');
 
     // id is a string
     const { id } = useParams();
@@ -42,7 +47,8 @@ function Taskpage() {
             id: task.id,
             taskText: task.name
         }));
-        
+
+        setGoalId(data[0].goal_id);
         setTask(...trimmedTask);
     };
 
@@ -58,6 +64,11 @@ function Taskpage() {
         setActions(data.map(item => ({ id: item.id, actionText: item.name })));
     };
 
+    const handleClickNavigation = () => {
+        let id = goalId
+        navigate(`/goalpage/${goalId}`);
+    }
+
     const handleAddAction = () => {
         setShowInput(true);
     };
@@ -71,7 +82,12 @@ function Taskpage() {
             // Insert data to Supabase
             const { data, error } = await supabase
                 .from('Action')
-                .insert({ name: actionText, is_achieved: false, task_id: taskId })
+                .insert({ 
+                    name: actionText,
+                    is_achieved: false,
+                    task_id: taskId,
+                    user_id: user_id
+                })
                 .select();
 
             const trimmedAction = data.map(action => ({
@@ -109,6 +125,7 @@ function Taskpage() {
             <Navigationbar />
             <h1
                 className="top-message"
+                onClick={handleClickNavigation}
             >
                 {task.taskText}
             </h1>

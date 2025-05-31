@@ -9,10 +9,8 @@ const Task = ({ id, taskText, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(taskText);
 
-    const handleTaskClick = () => {
-        if (!isEditing) {
-            navigate(`/taskpage/${id}`);
-        }
+    const handleAddActions = () => {
+        navigate(`/taskpage/${id}`);
     };
 
     const handleEditClick = (e) => {
@@ -79,10 +77,18 @@ const Task = ({ id, taskText, onDelete }) => {
     return (
         <div
             className="task-container"
-            onClick={handleTaskClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {isHovered && !isEditing && (
+                <button
+                    className="add-actions-button"
+                    onClick={handleAddActions}
+                >
+                    Add actions
+                </button>
+            )}
+
             {isHovered && !isEditing && (
                 <Edit onClick={handleEditClick} />
             )}

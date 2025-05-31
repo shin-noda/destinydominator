@@ -15,11 +15,6 @@ const Settingwindow = () => {
             className="setting-window-container"
         >
             <button
-                className="deactivate-button"
-            >
-                deactivate an accout
-            </button>
-            <button
                 className="signout-button"
                 onClick={signOut}
             >
