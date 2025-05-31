@@ -2,7 +2,7 @@
   "name": "goaltracker",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://shin-noda.github.io/goaltracker/",
+  "homepage": "https://shin-noda.github.io/goaltracker",
   "type": "module",
   "scripts": {
     "dev": "vite",
