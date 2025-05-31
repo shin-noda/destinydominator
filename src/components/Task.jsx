@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Edit from "./Edit.jsx";
 import supabase from "../helper/supabaseClient.js";
 
-const Goal = ({ id, goalText, onDelete }) => {
+const Task = ({ id, taskText, isAchieved, onDelete }) => {
     const navigate = useNavigate();
     const [isHovered, setIsHovered] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [text, setText] = useState(goalText);
+    const [is_achieved, setIs_achieved] = useState(isAchieved);
+    const [text, setText] = useState(taskText);
 
-    const handleAddTasks = () => {
-        navigate(`/goalpage/${id}`);
-    }
+    const handleAddActions = () => {
+        navigate(`/taskpage/${id}`);
+    };
 
     const handleEditClick = (e) => {
         e.stopPropagation();
@@ -20,93 +21,108 @@ const Goal = ({ id, goalText, onDelete }) => {
 
     const handleInputChange = (e) => {
         setText(e.target.value);
-    }
+    };
 
-    const handleSaveGoal = async (e) => {
+    const handleSaveTask = async (e) => {
         setIsEditing(false);
 
         if (text && text.trim().length != 0) {
             // Insert data to Supabase
             const { data, error } = await supabase
-                .from('Goal')
+                .from('Task')
                 .update({ name: text })
                 .eq('id', id);
             
             // Show an error message
             if (error) {
-                console.error("Error updating goal: ", error);
+                console.error("Error updating task: ", error);
             }
         } else {
             // Cancel update
-            setText(goalText);
+            setText(taskText);
         }
     };
 
-    const handleDeleteGoal = async (e) => {
+    const handleDeleteTask = async (e) => {
         e.stopPropagation();
         setIsEditing(false);
 
-        deleteCorrespoindingTasksAndActions(id);
-
-        // Delete the goal and corresponding tasks and actions
-        // Note: need to delete this after deleting corresponding tasks and actions
+        // Delete the task and correspoinding actions
         const { data, error } = await supabase
-            .from('Goal')
+            .from('Task')
             .delete()
             .eq('id', id);
         
+        deleteCorrespondingActions(id);
+
         if (error) {
-            console.error("Error deleting goal: ", error);
+            console.error("Error deleting task: ", error);
         } else {
             // Notify parent to remove from UI
             onDelete(id);
         }
-    }
+    };
 
-    const deleteCorrespoindingTasksAndActions = async (id) => {
-        const { data: taskData, error: taskError } = await supabase
-            .from('Task')
-            .select('*')
-            .eq('goal_id', id);
+    const deleteCorrespondingActions = async (id) => {
+        const { data, error } = await supabase
+            .from('Action')
+            .delete()
+            .eq('task_id', id);
+    };
 
-        // Delete actions related to the task
-        for (let i = 0; i < taskData.length; i++) {
-            const taskId = taskData[i].id;
-
-            // Delete actions
-            const { data: actionData, error: actionError } = await supabase
-                .from('Action')
-                .delete()
-                .eq('task_id', taskId);
-            
-            // Delete the task
-            const { data: oneTask, error: oneTaskError } = await supabase
-                .from('Task')
-                .delete()
-                .eq('id', taskId);
-        }
-    }
-
-    const handleCancelGoal = (e) => {
+    const handleCancelTask = (e) => {
         e.stopPropagation();
         setIsEditing(false);
+    };
+
+    const getBackgroundColor = () => {
+        if (is_achieved) {
+            return "lightgreen";
+        }
+
+        return "white";
+    };
+
+    const handleCheckboxChange = async() => {
+        // Update the state of the goal
+        const { data, error } = await supabase
+            .from('Task')
+            .update({ is_achieved: !is_achieved })
+            .eq('id', id);
+
+        
+        setIs_achieved(!is_achieved);
     }
 
     return (
         <div
-            className="goal-container"
+            className="task-container"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            style={{ backgroundColor: getBackgroundColor() }}
         >
             {isHovered && !isEditing && (
                 <button
-                    className="add-tasks-button"
-                    onClick={handleAddTasks}
+                    className="add-actions-button"
+                    onClick={handleAddActions}
                 >
-                    Add tasks
+                    Add actions
                 </button>
             )}
 
+            {isHovered && !isEditing && (
+                <div
+                    className="done-container"
+                >
+                    <input
+                        className="done-checkbox"
+                        type="checkbox"
+                        checked={is_achieved}
+                        onChange={handleCheckboxChange}
+                    />
+                    Done
+                </div>
+            )}
 
             {isHovered && !isEditing && (
                 <Edit onClick={handleEditClick} />
@@ -114,7 +130,7 @@ const Goal = ({ id, goalText, onDelete }) => {
 
             {isEditing ? (
                 <>
-                    <input 
+                    <input
                         className="block-input-field"
                         type="text"
                         value={text}
@@ -123,28 +139,28 @@ const Goal = ({ id, goalText, onDelete }) => {
                     <br></br>
                     <button
                         className="add-button"
-                        onClick={handleSaveGoal}
+                        onClick={handleSaveTask}
                     >
                         Save
                     </button>
                     <button
                         className="delete-button"
-                        onClick={handleDeleteGoal}
+                        onClick={handleDeleteTask}
                     >
                         Delete
                     </button>
                     <button
                         className="cancel-button"
-                        onClick={handleCancelGoal}
+                        onClick={handleCancelTask}
                     >
                         X
                     </button>
                 </>
-            ) : (
+            ): (
                 <span>{text}</span>
             )}
         </div>
     );
 };
 
-export default Goal;
+export default Task;

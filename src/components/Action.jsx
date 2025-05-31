@@ -2,10 +2,11 @@ import { useState } from 'react'
 import supabase from '../helper/supabaseClient';
 import Edit from "./Edit.jsx";
 
-const Action = ({ id, actionText, onDelete }) => {
+const Action = ({ id, actionText, isAchieved, onDelete }) => {
     const [text, setText] = useState(actionText);
     const [isHovered, setIsHovered] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
+    const [is_achieved, setIs_achieved] = useState(isAchieved);
 
     const handleEditClick = (e) => {
         setIsEditing(true);
@@ -60,12 +61,46 @@ const Action = ({ id, actionText, onDelete }) => {
         setIsEditing(false);
     };
 
+    const getBackgroundColor = () => {
+        if (is_achieved) {
+            return "lightgreen";
+        }
+
+        return "white";
+    };
+
+    const handleCheckboxChange = async() => {
+        // Update the state of the goal
+        const { data, error } = await supabase
+            .from('Action')
+            .update({ is_achieved: !is_achieved })
+            .eq('id', id);
+
+        
+        setIs_achieved(!is_achieved);
+    }
+
     return (
         <div
             className="action-container"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            style={{ backgroundColor: getBackgroundColor() }}
         >
+            {isHovered && !isEditing && (
+                <div
+                    className="done-container"
+                >
+                    <input
+                        className="done-checkbox"
+                        type="checkbox"
+                        checked={is_achieved}
+                        onChange={handleCheckboxChange}
+                    />
+                    Done
+                </div>
+            )}
+
             {isHovered && !isEditing && (
                 <Edit onClick={handleEditClick} />
             )}

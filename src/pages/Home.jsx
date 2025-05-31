@@ -56,7 +56,7 @@ function Home() {
         <div
             className="login-container"
         >
-            <h1>Goal Tracker</h1>
+            <h1>GoalTracker</h1>
             <br></br>
             {message && <span>{message}</span>}
             <form onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ function Home() {
                 </button>
             </form>
             <br></br>
-            <span>Don't have an account?</span>
+            <span>Don't have an account? </span>
             <Link to="/register">Register.</Link>
         </div>
         );

@@ -111,7 +111,8 @@ const Visualpage = () => {
         
         const trimmedGoal = data.map(goal => ({
             id: goal.id,
-            goalText: goal.name
+            goalText: goal.name,
+            isAchieved: goal.is_achieved
         }));
         
         setGoal(...trimmedGoal);
@@ -132,7 +133,7 @@ const Visualpage = () => {
         }
 
         // set data
-        setTasks(data.map(item => ({ id: item.id, taskText: item.name })));
+        setTasks(data.map(item => ({ id: item.id, taskText: item.name, isAchieved: item.is_achieved })));
 
         // this is requiered because even though tasks are set, those changes won't be instant
         return taskIds;
@@ -147,7 +148,7 @@ const Visualpage = () => {
             .order('task_id');
         
         // set data
-        setActions(data.map(item => ({ id: item.id, actionText: item.name, taskId: item.task_id })));
+        setActions(data.map(item => ({ id: item.id, actionText: item.name, taskId: item.task_id, isAchieved: item.is_achieved })));
     };
     
     const drawLinesBetweenNodes = () => {
@@ -197,6 +198,7 @@ const Visualpage = () => {
                 >
                     <Goalnode
                         name={goal.goalText}
+                        isAchieved={goal.isAchieved}
                         ref={goalRef}
                     />
                 </div>
@@ -208,6 +210,7 @@ const Visualpage = () => {
                             key={task.id}
                             taskId={task.id}
                             name={task.taskText}
+                            isAchieved={task.isAchieved}
                             ref={(el) => {
                                 if (el) {
                                     taskRefs.current[task.id] = {
@@ -227,6 +230,7 @@ const Visualpage = () => {
                             key={action.id}
                             taskId={action.id}
                             name={action.actionText}
+                            isAchieved={action.isAchieved}
                             ref={(el) => {
                                 if (el) {
                                     actionRefs.current[action.id] = {

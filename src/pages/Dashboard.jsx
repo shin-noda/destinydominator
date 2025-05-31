@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import supabase from "../helper/supabaseClient";
+import supabase from "../helper/supabaseClient.js";
 import Goal from "../components/Goal.jsx";
 import Navigationbar from "../components/Navigationbar.jsx";
 
 function Dashboard() {
-    const [id, setId] = useState(0);
     const [goals, setGoals] = useState([]);
     const [goalText, setGoalText] = useState("");
     const [showInput, setShowInput] = useState(false);
@@ -25,8 +24,13 @@ function Dashboard() {
             .eq('user_id', user_id)
             .order('id');
         
+        if (error) {
+            console.error(error);
+            return;
+        }
+        
         // set data
-        setGoals(data.map(item => ({ id: item.id, goalText: item.name })));
+        setGoals(data.map(item => ({ id: item.id, goalText: item.name, isAchieved: item.is_achieved })));
     };
 
     const handleAddGoal = () => {
@@ -51,7 +55,8 @@ function Dashboard() {
 
             const trimmedGoal = data.map(goal => ({
                 id: goal.id,
-                goalText: goal.name
+                goalText: goal.name,
+                isAchieved: goal.is_achieved
             }));
 
             // Display updated a list of goals
@@ -123,6 +128,7 @@ function Dashboard() {
                         key={goal.id} 
                         id={goal.id} 
                         goalText={goal.goalText}
+                        isAchieved={goal.isAchieved}
                         onDelete={handleDeleteGoal}
                     />
                 ))}
