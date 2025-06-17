@@ -1,6 +1,3 @@
-## Link
-https://shin-noda.github.io/goaltracker/
-
 ## How to use GoalTracker? 🎯
 Achieving a goal can feel overwhelming. But breaking it down into smaller steps makes it more manageable. This app is designed to help you achieve your goals by organizing them into clear, actionable steps.
 
